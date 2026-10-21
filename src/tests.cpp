@@ -44,7 +44,23 @@ void test_pop_on_empty_list(void)
 /// Verify popBackValue() gives 3, then popFrontValue() gives 1, then length() is 1.
 void test_pop_order(void)
 {
-    TEST_ASSERT_TRUE_MESSAGE(0, "TODO: Implement this test");
+    DoublyLinkedList list;
+    
+    list.pushBackValue(1);
+    list.pushBackValue(2);
+    list.pushBackValue(3);
+
+    std::optional<NodeValue> back = list.popBackValue();
+
+    TEST_ASSERT_TRUE_MESSAGE(back.has_value(), "popBackValue() should return a value");
+    TEST_ASSERT_TRUE_MESSAGE((std::get<int>(back.value()) == 3), "popBackValue() should return 3");
+
+    std::optional<NodeValue> front = list.popFrontValue();
+
+    TEST_ASSERT_TRUE_MESSAGE(front.has_value(), "popFrontValue() should return a value");
+    TEST_ASSERT_TRUE_MESSAGE((std::get<int>(front.value()) == 1), "popFrontValue() should return 1");
+
+    TEST_ASSERT_TRUE_MESSAGE(list.length() == 1, "List should have length 1 after two pops");
 }
 
 /// Push one value, then call deleteValue with a value that is NOT in the list.

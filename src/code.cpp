@@ -32,7 +32,7 @@ DoubleNode::DoubleNode(NodeValue newValue)
 NodeValue DoubleNode::getValue() const
 {
     // TODO: return the value field
-    return NodeValue{};
+    return value;
 }
 
 /// Const getter: return the previous node (or nullptr).
@@ -128,7 +128,7 @@ DoubleNode *DoublyLinkedList::detachLast()
         return nullptr;
     }
 
-    DoubleNode *nodePtr = headPtr;
+    DoubleNode *nodePtr = tailPtr;
     if (headPtr == tailPtr){
         headPtr = tailPtr = nullptr;
     }
