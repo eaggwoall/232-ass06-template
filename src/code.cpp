@@ -39,26 +39,28 @@ NodeValue DoubleNode::getValue() const
 DoubleNode *DoubleNode::getPrev() const
 {
     // TODO: return the prevPtr field
-    return nullptr;
+    return prevPtr;
 }
 
 /// Const getter: return the next node (or nullptr).
 DoubleNode *DoubleNode::getNext() const
 {
     // TODO: return the nextPtr field
-    return nullptr;
+    return nextPtr;
 }
 
 /// Setter: store newPrevPtr in prevPtr.
 void DoubleNode::setPrev(DoubleNode *newPrevPtr)
 {
     // TODO: assign the field
+    prevPtr = newPrevPtr;
 }
 
 /// Setter: store newNextPtr in nextPtr.
 void DoubleNode::setNext(DoubleNode *newNextPtr)
 {
     // TODO: assign the field
+    nextPtr = newNextPtr;
 }
 
 // ============================================================
@@ -119,16 +121,16 @@ DoubleNode *DoublyLinkedList::detachValue(NodeValue value)
 void DoublyLinkedList::pushFrontValue(NodeValue value)
 {
     // TODO: implement
-    DoubleNode *newNode = new DoubleNode(value);
+    DoubleNode *newNodePtr = new DoubleNode(value);
     if (headPtr == nullptr)
     {
-        headPtr = tailPtr = newNode;
+        headPtr = tailPtr = newNodePtr;
     }
     else
     {
-        newNode->setNext(headPtr);
-        headPtr->setPrev(newNode);
-        headPtr = newNode;
+        newNodePtr->setNext(headPtr);
+        headPtr->setPrev(newNodePtr);
+        headPtr = newNodePtr;
     }
     count++;
 }
@@ -137,6 +139,18 @@ void DoublyLinkedList::pushFrontValue(NodeValue value)
 void DoublyLinkedList::pushBackValue(NodeValue value)
 {
     // TODO: implement
+    DoubleNode *newNodePtr = new DoubleNode(value);
+    if (tailPtr == nullptr)
+    {
+        headPtr = tailPtr = newNodePtr;
+    }
+    else
+    {
+        newNodePtr->setPrev(tailPtr);
+        tailPtr->setNext(newNodePtr);
+        tailPtr = newNodePtr;
+    }
+    count++;
 }
 
 /// Detach the first node, read its value, delete the node, return the value.
