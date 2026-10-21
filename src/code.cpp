@@ -23,6 +23,7 @@
 /// Constructor: initialize ALL THREE fields with a member initializer list.
 /// value <- newValue, prevPtr <- nullptr, nextPtr <- nullptr.
 DoubleNode::DoubleNode(NodeValue newValue)
+: value(newValue), prevPtr(nullptr), nextPtr(nullptr)
 {
     // TODO: move the initialization of all three fields into an initializer list
 }
@@ -66,14 +67,27 @@ void DoubleNode::setNext(DoubleNode *newNextPtr)
 
 /// Empty list: headPtr = nullptr, tailPtr = nullptr, count = 0.
 DoublyLinkedList::DoublyLinkedList()
+: headPtr(nullptr), tailPtr(nullptr), count(0)
 {
     // TODO: initialize all three fields (use an initializer list)
+
 }
 
 /// RAII: delete ALL nodes. Save the next pointer BEFORE delete.
 DoublyLinkedList::~DoublyLinkedList()
 {
     // TODO: walk through the list and delete every node
+    DoubleNode *currentPtr = headPtr;
+    while (currentPtr != nullptr)
+    {
+        DoubleNode *nextPtr = currentPtr->getNext();
+        delete currentPtr;
+        currentPtr = nextPtr;
+    }
+
+    headPtr = nullptr;
+    tailPtr = nullptr;
+    count = 0;
 }
 
 /// Unlink the first node and RETURN it (do not delete it).
@@ -105,6 +119,18 @@ DoubleNode *DoublyLinkedList::detachValue(NodeValue value)
 void DoublyLinkedList::pushFrontValue(NodeValue value)
 {
     // TODO: implement
+    DoubleNode *newNode = new DoubleNode(value);
+    if (headPtr == nullptr)
+    {
+        headPtr = tailPtr = newNode;
+    }
+    else
+    {
+        newNode->setNext(headPtr);
+        headPtr->setPrev(newNode);
+        headPtr = newNode;
+    }
+    count++;
 }
 
 /// Create a node with new and link it at the end. Handle the empty list.
@@ -163,7 +189,7 @@ int DoublyLinkedList::printBackward() const
 int DoublyLinkedList::length() const
 {
     // TODO: implement
-    return 0;
+    return count;
 }
 
 // ===== BEGIN PART 3 (do not remove this marker) =====
