@@ -67,7 +67,12 @@ void test_pop_order(void)
 /// Verify it returns false and length() does not change.
 void test_delete_value_not_found(void)
 {
-    TEST_ASSERT_TRUE_MESSAGE(0, "TODO: Implement this test");
+    DoublyLinkedList list;
+    list.pushBackValue(1);
+
+    bool deleted = list.deleteValue(2);
+    TEST_ASSERT_TRUE_MESSAGE(!deleted, "deleteValue() should return false for a value not in the list");
+    TEST_ASSERT_TRUE_MESSAGE(list.length() == 1, "List length should remain unchanged after failed delete");
 }
 
 /// Push 1, 2, 3 with pushBackValue. Call deleteValue(2).
