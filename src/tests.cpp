@@ -31,7 +31,13 @@ void test_push_increases_length(void)
 /// Verify popFrontValue() and popBackValue() both have NO value (has_value() is false).
 void test_pop_on_empty_list(void)
 {
-    TEST_ASSERT_TRUE_MESSAGE(0, "TODO: Implement this test");
+    DoublyLinkedList list;
+
+    std::optional<NodeValue> frontValue = list.popFrontValue();
+    TEST_ASSERT_TRUE_MESSAGE((!frontValue.has_value()), "popFrontValue() on empty list should return std::nullopt");
+
+    std::optional<NodeValue> backValue = list.popBackValue();
+    TEST_ASSERT_TRUE_MESSAGE((!backValue.has_value()), "popBackValue() on empty list should return std::nullopt");
 }
 
 /// Push 1, 2, 3 with pushBackValue.

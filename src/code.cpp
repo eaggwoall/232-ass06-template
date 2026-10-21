@@ -98,7 +98,25 @@ DoublyLinkedList::~DoublyLinkedList()
 DoubleNode *DoublyLinkedList::detachFirst()
 {
     // TODO: implement
-    return nullptr;
+    if (headPtr == nullptr){
+        return nullptr;
+    }
+
+    DoubleNode *nodePtr = headPtr;
+    if (headPtr == tailPtr){
+        headPtr = tailPtr = nullptr;
+    }
+    else{
+        headPtr = nodePtr->getNext();
+        headPtr->setPrev(nullptr);
+    }
+
+    nodePtr->setPrev(nullptr);
+    nodePtr->setNext(nullptr);
+
+    count--;
+
+    return nodePtr;
 }
 
 /// Unlink the last node and RETURN it (do not delete it).
@@ -106,7 +124,25 @@ DoubleNode *DoublyLinkedList::detachFirst()
 DoubleNode *DoublyLinkedList::detachLast()
 {
     // TODO: implement
-    return nullptr;
+    if (tailPtr == nullptr){
+        return nullptr;
+    }
+
+    DoubleNode *nodePtr = headPtr;
+    if (headPtr == tailPtr){
+        headPtr = tailPtr = nullptr;
+    }
+    else{
+        tailPtr = nodePtr->getPrev();
+        tailPtr->setNext(nullptr);
+    }
+
+    nodePtr->setPrev(nullptr);
+    nodePtr->setNext(nullptr);
+
+    count--;
+
+    return nodePtr;
 }
 
 /// Find the FIRST node equal to value and unlink it (head, tail, only node
@@ -158,7 +194,17 @@ void DoublyLinkedList::pushBackValue(NodeValue value)
 std::optional<NodeValue> DoublyLinkedList::popFrontValue()
 {
     // TODO: implement
-    return std::nullopt;
+    DoubleNode *nodePtr = detachFirst();
+
+    if (nodePtr == nullptr){
+        return std::nullopt;
+    }
+
+    NodeValue value = nodePtr->getValue();
+
+    delete nodePtr;
+
+    return value;
 }
 
 /// Detach the last node, read its value, delete the node, return the value.
@@ -166,7 +212,17 @@ std::optional<NodeValue> DoublyLinkedList::popFrontValue()
 std::optional<NodeValue> DoublyLinkedList::popBackValue()
 {
     // TODO: implement
-    return std::nullopt;
+    DoubleNode *nodePtr = detachLast();
+
+    if (nodePtr == nullptr){
+        return std::nullopt;
+    }
+
+    NodeValue value = nodePtr->getValue();
+
+    delete nodePtr;
+
+    return value;
 }
 
 /// Remove the FIRST node equal to value and free it.
