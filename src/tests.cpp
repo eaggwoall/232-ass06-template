@@ -87,7 +87,6 @@ void test_delete_middle_keeps_links(void)
     list.pushBackValue(3);
 
     bool result = list.deleteValue(NodeValue{2});
-
     TEST_ASSERT_TRUE_MESSAGE(result == 1, "NodeValue index 2 was not deleted");
     
     std::optional<NodeValue> firstBack = list.popBackValue();
@@ -107,7 +106,20 @@ void test_delete_middle_keeps_links(void)
 /// Verify length() is 2 and popFrontValue() gives 2 (only the FIRST 1 was removed).
 void test_std_delete_only_first(void)
 {
-    TEST_ASSERT_TRUE_MESSAGE(0, "TODO: Implement this test");
+    StdDoublyLinkedList list;
+
+    list.pushBackValue(NodeValue{1});
+    list.pushBackValue(NodeValue{2});
+    list.pushBackValue(NodeValue{1});
+
+    bool result = list.deleteValue(NodeValue{1});
+    TEST_ASSERT_TRUE_MESSAGE(result == 1, "NodeValue index 1 was not deleted");
+
+    TEST_ASSERT_TRUE_MESSAGE(list.length() == 2, "List length should be 2 after deleting one node");
+    
+    std::optional<NodeValue> front = list.popFrontValue();
+    TEST_ASSERT_TRUE_MESSAGE(front.has_value(), "popFrontValue should have a value");
+    TEST_ASSERT_TRUE_MESSAGE(std::get<int>(front.value()) == 2, "popFrontValue should return 2 after deleting the first 1");
 }
 
 /// Create an EMPTY StdDoublyLinkedList.
