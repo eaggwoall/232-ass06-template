@@ -80,7 +80,23 @@ void test_delete_value_not_found(void)
 /// (popBackValue follows prevPtr: this fails if you forgot to repair the backward link.)
 void test_delete_middle_keeps_links(void)
 {
-    TEST_ASSERT_TRUE_MESSAGE(0, "TODO: Implement this test");
+    DoublyLinkedList list;
+    
+    list.pushBackValue(1);
+    list.pushBackValue(2);
+    list.pushBackValue(3);
+
+    bool result = list.deleteValue(NodeValue{2});
+
+    TEST_ASSERT_TRUE_MESSAGE(result == 1, "NodeValue index 2 was not deleted");
+    
+    std::optional<NodeValue> firstBack = list.popBackValue();
+    TEST_ASSERT_TRUE_MESSAGE(firstBack.has_value(), "popBackValue should have a value");
+    TEST_ASSERT_TRUE_MESSAGE(std::get<int>(firstBack.value()) == 3, "first popBackValue should have value 3");
+
+    std::optional<NodeValue> secondBack = list.popBackValue();
+    TEST_ASSERT_TRUE_MESSAGE(secondBack.has_value(), "popBackValue should have a value");
+    TEST_ASSERT_TRUE_MESSAGE(std::get<int>(secondBack.value()) == 1, "second popBackValue should have value 1");
 }
 
 // ============================================================

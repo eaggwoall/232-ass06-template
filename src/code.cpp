@@ -150,6 +150,38 @@ DoubleNode *DoublyLinkedList::detachLast()
 DoubleNode *DoublyLinkedList::detachValue(NodeValue value)
 {
     // TODO: implement
+    if (headPtr == nullptr){
+        return nullptr;
+    }
+
+    if (headPtr->getValue() == value){
+        return detachFirst();
+    }
+
+    if (tailPtr->getValue() == value){
+        return detachLast();
+    }
+
+    DoubleNode *currentPtr = headPtr->getNext();
+
+    while (currentPtr != nullptr && currentPtr != tailPtr){
+        if (currentPtr->getValue() == value){
+            DoubleNode *prevPtr = currentPtr->getPrev();
+            DoubleNode *nextPtr = currentPtr->getNext();
+
+            prevPtr->setNext(nextPtr);
+            nextPtr->setPrev(prevPtr);
+
+            currentPtr->setNext(nullptr);
+            currentPtr->setPrev(nullptr);
+
+            count--;
+
+            return currentPtr;
+        }
+        currentPtr = currentPtr->getNext();
+    }
+
     return nullptr;
 }
 
@@ -230,7 +262,13 @@ std::optional<NodeValue> DoublyLinkedList::popBackValue()
 bool DoublyLinkedList::deleteValue(NodeValue value)
 {
     // TODO: implement
-    return false;
+    DoubleNode *nodePtr = detachValue(value);
+
+    if (nodePtr == nullptr){
+        return false;
+    }
+    delete nodePtr;
+    return true;
 }
 
 /// Return true if any node holds value.
