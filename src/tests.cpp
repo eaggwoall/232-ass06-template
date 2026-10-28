@@ -126,5 +126,10 @@ void test_std_delete_only_first(void)
 /// Verify popFrontValue() and popBackValue() have NO value and do not crash.
 void test_std_pop_on_empty_list(void)
 {
-    TEST_ASSERT_TRUE_MESSAGE(0, "TODO: Implement this test");
+    StdDoublyLinkedList list;
+    std::optional<NodeValue> front = list.popFrontValue();
+    std::optional<NodeValue> back = list.popBackValue();
+
+    TEST_ASSERT_TRUE_MESSAGE(!front.has_value(), "popFrontValue() should not have a value on an empty list");
+    TEST_ASSERT_TRUE_MESSAGE(!back.has_value(), "popBackValue() should not have a value on an empty list");
 }

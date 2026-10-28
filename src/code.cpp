@@ -370,7 +370,6 @@ bool StdDoublyLinkedList::deleteValue(NodeValue value)
 bool StdDoublyLinkedList::containsValue(NodeValue value) const
 {
     // TODO: implement
-    return 0;
 }
 
 /// Print head -> tail (same format as Part 2). Return the number of values.
